@@ -26,14 +26,18 @@ angular.module('starter', ['ionic'])
 .controller('weatherCtrl', function ($http) {
   var weather = this;
 
+  var apikey = '4887e91c6c12fd6e';
+  var url = '/api/' + apikey + '/conditions/q/';
+
+  $http.get(url + 'autoip.json').then(function (res) {
+    weather.temp = parseInt(res.data.current_observation.temp_f);
+  });
+
   navigator.geolocation.getCurrentPosition(function (geopos) {
     var lat = geopos.coords.latitude;
     var long = geopos.coords.longitude;
-    var apikey = '4887e91c6c12fd6e';
-    var url = '/api/' + apikey + '/conditions/q/' +
-      lat + ',' + long + '.json';
 
-    $http.get(url).then(function (res) {
+    $http.get(url + lat + ',' + long + '.json').then(function (res) {
       weather.temp = parseInt(res.data.current_observation.temp_f);
     });
   });
