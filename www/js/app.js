@@ -29,11 +29,12 @@ angular.module('starter', ['ionic'])
   navigator.geolocation.getCurrentPosition(function (geopos) {
     var lat = geopos.coords.latitude;
     var long = geopos.coords.longitude;
-    var apikey = '12ae47df0153fc2ffdce646e653b9a1e'
-    var url = '/api/forecast/' + apikey + '/' + lat + ',' + long;
+    var apikey = '4887e91c6c12fd6e';
+    var url = '/api/' + apikey + '/conditions/q/' +
+      lat + ',' + long + '.json';
 
     $http.get(url).then(function (res) {
-      weather.temp = parseInt(res.data.currently.temperature);
+      weather.temp = parseInt(res.data.current_observation.temp_f);
     });
   });
 
