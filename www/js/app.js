@@ -30,7 +30,10 @@ angular.module('starter', ['ionic'])
   var url = '/api/' + apikey + '/conditions/q/';
 
   $http.get(url + 'autoip.json').then(function (res) {
-    weather.temp = parseInt(res.data.current_observation.temp_f);
+    var data = res.data.current_observation;
+
+    weather.location = data.display_location.full;
+    weather.temp = parseInt(data.temp_f);
   });
 
   navigator.geolocation.getCurrentPosition(function (geopos) {
@@ -38,7 +41,10 @@ angular.module('starter', ['ionic'])
     var long = geopos.coords.longitude;
 
     $http.get(url + lat + ',' + long + '.json').then(function (res) {
-      weather.temp = parseInt(res.data.current_observation.temp_f);
+      var data = res.data.current_observation;
+
+      weather.location = data.display_location.full;
+      weather.temp = parseInt(data.temp_f);
     });
   });
 
