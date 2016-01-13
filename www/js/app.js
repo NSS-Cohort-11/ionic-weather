@@ -29,26 +29,24 @@ angular.module('starter', ['ionic'])
   var apikey = '4887e91c6c12fd6e';
   var url = '/api/' + apikey + '/conditions/q/';
 
-  $http.get(url + 'autoip.json').then(function (res) {
-    var data = res.data.current_observation;
-
-    weather.location = data.display_location.full;
-    weather.temp = parseInt(data.temp_f);
-    weather.image = data.icon_url;
-  });
+  $http.get(url + 'autoip.json').then(parseWUData);
 
   navigator.geolocation.getCurrentPosition(function (geopos) {
     var lat = geopos.coords.latitude;
     var long = geopos.coords.longitude;
 
-    $http.get(url + lat + ',' + long + '.json').then(function (res) {
-      var data = res.data.current_observation;
-
-      weather.location = data.display_location.full;
-      weather.temp = parseInt(data.temp_f);
-      weather.image = data.icon_url;
-    });
+    $http
+      .get(url + lat + ',' + long + '.json')
+      .then(parseWUData);
   });
 
   weather.temp = '--';
+
+  function parseWUData(res) {
+    var data = res.data.current_observation;
+
+    weather.location = data.display_location.full;
+    weather.temp = parseInt(data.temp_f);
+    weather.image = data.icon_url;
+  }
 });
