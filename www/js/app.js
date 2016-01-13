@@ -34,6 +34,7 @@ angular.module('starter', ['ionic'])
 
     weather.location = data.display_location.full;
     weather.temp = parseInt(data.temp_f);
+    weather.image = data.icon_url;
   });
 
   navigator.geolocation.getCurrentPosition(function (geopos) {
@@ -45,6 +46,7 @@ angular.module('starter', ['ionic'])
 
       weather.location = data.display_location.full;
       weather.temp = parseInt(data.temp_f);
+      weather.image = data.icon_url;
     });
   });
 
